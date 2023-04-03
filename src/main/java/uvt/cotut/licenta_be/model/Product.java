@@ -1,18 +1,13 @@
-package uvt.cotut.licenta_be.entity;
+package uvt.cotut.licenta_be.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -29,6 +24,9 @@ public class Product {
     @Column(nullable = false)
     private Float price;
 
+    @Column
+    private Float originalPrice;
+
     @Column(nullable = false)
     private Long amount;
 
@@ -36,8 +34,9 @@ public class Product {
     @ColumnDefault("true")
     private Boolean available;
 
-    @ManyToMany
-    private List<Category> categoryList;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "SubCategoryId")
+    private SubCategory subCategory;
 
     private LocalDateTime createdDate;
 

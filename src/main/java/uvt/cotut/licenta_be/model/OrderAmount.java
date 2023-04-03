@@ -1,15 +1,11 @@
-package uvt.cotut.licenta_be.entity;
+package uvt.cotut.licenta_be.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderAmount {
@@ -28,4 +24,11 @@ public class OrderAmount {
 
     @Column(nullable = false)
     private Integer amount;
+
+    @Column(nullable = false)
+    private Float price;
+
+    @Column
+    private Float originalPrice;
+
 }
