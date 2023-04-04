@@ -9,8 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import uvt.cotut.licenta_be.model.Product;
+import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDTO;
 import uvt.cotut.licenta_be.service.composite.ProductCompositeService;
+
+import java.util.List;
 
 
 @RestController
@@ -28,5 +31,14 @@ public class ProductController {
     @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
     public Product addProduct(@RequestBody @Valid ProductDTO productDTO )  {
         return productCompositeService.addProduct(productDTO);
+    }
+
+    @Operation(summary = "Get items with filter criteria")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+//    @PreAuthorize()
+    @GetMapping(value = "/", produces = "application/json", consumes = "application/json")
+    public List<Product> getFilteredProducts(@RequestBody FilterCriteriaDTO criteriaDTO)  {
+        return productCompositeService.getFilteredProducts(criteriaDTO);
     }
 }

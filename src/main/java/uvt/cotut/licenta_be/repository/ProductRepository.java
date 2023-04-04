@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uvt.cotut.licenta_be.model.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductCustomRepository {
 }

@@ -1,6 +1,5 @@
 package uvt.cotut.licenta_be.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,6 @@ public class SubCategory {
     @Column(nullable = false)
     private String name;
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CategoryId")
     private Category category;
