@@ -14,9 +14,11 @@ public class ProductDTO {
     private String description;
 
     @Min(value = 0,message = "INVALID_VALUE, PRICE")
+    @NotNull(message = "NOT_NULL, PRICE")
     private Float price;
 
     @Min(value = 0, message = "INVALID_VALUE, AMOUNT")
+    @NotNull(message = "NOT_NULL, AMOUNT")
     private Long amount;
 
     @NotNull(message = "NOT_NULL, CATEGORY")
