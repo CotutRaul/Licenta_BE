@@ -18,6 +18,7 @@ import uvt.cotut.licenta_be.service.composite.AuthenticationCompositeService;
 @AllArgsConstructor
 @Tag(name = "Authentication")
 @Slf4j
+@CrossOrigin
 public class AuthenticationController {
     private final AuthenticationCompositeService authenticationCompositeService;
 

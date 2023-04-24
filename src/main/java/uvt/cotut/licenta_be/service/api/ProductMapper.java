@@ -2,11 +2,12 @@ package uvt.cotut.licenta_be.service.api;
 
 import org.mapstruct.Mapper;
 import uvt.cotut.licenta_be.model.Product;
-import uvt.cotut.licenta_be.service.api.dto.ProductDTO;
+import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
+import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    Product toEntity(ProductDTO productDTO);
+    Product toEntity(ProductCreateDTO productCreateDTO);
 
-    ProductDTO toDTO(Product product);
+    ProductDisplayDTO toDisplayDTO(Product product);
 }

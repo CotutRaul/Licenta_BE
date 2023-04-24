@@ -6,6 +6,6 @@ import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import java.util.List;
 
 public interface ProductCustomRepository {
-    List<Product> findProductsFiltered(FilterCriteriaDTO dto);
+    List<Product> findProductsFiltered(FilterCriteriaDTO dto, Integer limit);
 
 }

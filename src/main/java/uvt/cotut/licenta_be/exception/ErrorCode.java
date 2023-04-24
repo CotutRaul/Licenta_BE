@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode{
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not Found"),
-    USER_ALREADY_TAKEN(HttpStatus.BAD_REQUEST, "Email is already registered");
+    USER_ALREADY_TAKEN(HttpStatus.BAD_REQUEST, "Email is already registered"),
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND,"Product not Found");
 
     private final HttpStatus httpStatus;
     private final String errorInfo;

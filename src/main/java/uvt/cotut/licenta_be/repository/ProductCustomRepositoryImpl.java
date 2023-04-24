@@ -16,7 +16,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     private final EntityManager entityManager;
 
     @Override
-    public List<Product> findProductsFiltered(FilterCriteriaDTO dto) {
+    public List<Product> findProductsFiltered(FilterCriteriaDTO dto, Integer limit) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
         final Root<Product> root = criteriaQuery.from(Product.class);
@@ -56,7 +56,6 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         }
 
         criteriaQuery.select(root).where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).orderBy(order);
-        int limit = 20;
         int offset = (dto.getPage() - 1) * limit;
         return entityManager.createQuery(criteriaQuery).setFirstResult(offset).setMaxResults(limit).getResultList();
     }

@@ -7,7 +7,7 @@ import lombok.Data;
 import uvt.cotut.licenta_be.model.SubCategory;
 
 @Data
-public class ProductDTO {
+public class ProductCreateDTO {
     @NotBlank(message = "NOT_BLANK, NAME")
     private String name;
 
