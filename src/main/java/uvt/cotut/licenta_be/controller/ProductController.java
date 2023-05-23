@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,20 +40,23 @@ public class ProductController {
     public Product addProduct(@RequestBody @Valid ProductCreateDTO productCreateDTO )  {
         return productCompositeService.addProduct(productCreateDTO);
     }
-    
-    //Just testing
+
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
-//    @PreAuthorize()
-    @PostMapping(consumes = "multipart/form-data")
-    public void addProduct(@RequestParam("file") List<MultipartFile> file ) throws IOException {
-        productCompositeService.transferPhoto(file);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "upload", consumes = "multipart/form-data")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String imageUrl = productCompositeService.uploadImage(file);
+            return new ResponseEntity<>(imageUrl, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Operation(summary = "Get products with filter criteria")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
-//    @PreAuthorize()
     @PostMapping(value = "/", produces = "application/json", consumes = "application/json", params = "limit")
     public List<ProductDisplayDTO> getFilteredProducts(@RequestBody FilterCriteriaDTO criteriaDTO,
                                                        @RequestParam("limit") @Min(value = 1, message = "Invalid data") Integer limit)  {
@@ -61,7 +66,6 @@ public class ProductController {
     @Operation(summary = "Get product by id")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
-//    @PreAuthorize()
     @GetMapping(value = "/", produces = "application/json", params = "id")
     public Product getProductById(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id)  {
         return productCompositeService.getProductById(id);

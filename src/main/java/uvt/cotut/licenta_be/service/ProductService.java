@@ -1,5 +1,7 @@
 package uvt.cotut.licenta_be.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +16,10 @@ import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,6 +28,7 @@ public class ProductService {
 
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
+    private final Cloudinary cloudinaryService;
 
     @Transactional
     public Product addProduct(ProductCreateDTO productCreateDTO) {
@@ -36,13 +39,6 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void transferPhoto(List<MultipartFile> files) throws IOException {
-        for (MultipartFile file : files) {
-            String filename = file.getOriginalFilename();
-            File targetFile = new File("C:/Cotut/Faculta/Licenta/Upload_dir/" + filename);
-            file.transferTo(targetFile);
-        }
-    }
 
     public List<ProductDisplayDTO> getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
         return productRepository.findProductsFiltered(criteriaDTO, limit).stream().map(productMapper::toDisplayDTO).toList();
@@ -50,5 +46,11 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ApplicationBusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+    }
+
+    public String uploadImage(MultipartFile file) throws IOException {
+        Map<?, ?> uploadResult = cloudinaryService.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+
+        return (String) uploadResult.get("secure_url");
     }
 }

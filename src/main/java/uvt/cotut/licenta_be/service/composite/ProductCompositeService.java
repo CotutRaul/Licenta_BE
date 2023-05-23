@@ -24,15 +24,15 @@ public class ProductCompositeService {
         return productService.addProduct(productCreateDTO);
     }
 
-    public void transferPhoto(List<MultipartFile> file) throws IOException {
-        productService.transferPhoto(file);
-    }
-
     public List<ProductDisplayDTO> getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
         return productService.getFilteredProducts(criteriaDTO, limit);
     }
 
     public Product getProductById(Long id) {
         return productService.getProductById(id);
+    }
+
+    public String uploadImage(MultipartFile file) throws IOException {
+        return productService.uploadImage(file);
     }
 }

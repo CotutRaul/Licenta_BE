@@ -1,0 +1,42 @@
+# DB config
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Licenta
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        default_schema: public
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+server:
+  error:
+    include-message: always
+
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+jwt:
+  secret: CotutCotutCotutCotutCotutCotutCotutCotutCotutCotut
+
+
+rest-service:
+  cloudinary:
+    name: dmevmenne
+    api-key: 567646745438711
+    secret-key: MnD4qywxYGiO2LOD-4wooCI96Js
+  #Deprecated
+  imgur:
+    url: https://api.imgur.com/3/image
+    key: fc91154b4b5335e
