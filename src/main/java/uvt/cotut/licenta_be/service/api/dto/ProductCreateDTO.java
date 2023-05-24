@@ -23,4 +23,8 @@ public class ProductCreateDTO {
 
     @NotNull(message = "NOT_NULL, CATEGORY")
     private SubCategory subCategory;
+
+    @NotNull(message = "NOT_NULL, IMAGE CARD PATH")
+    private String imageCardPath;
+
 }

@@ -12,6 +12,7 @@ import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -34,5 +35,9 @@ public class ProductCompositeService {
 
     public String uploadImage(MultipartFile file) throws IOException {
         return productService.uploadImage(file);
+    }
+
+    public Map<String, List<String>> getAllCategories() {
+        return productService.getAllCategories();
     }
 }

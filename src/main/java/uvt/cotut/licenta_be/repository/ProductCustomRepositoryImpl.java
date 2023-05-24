@@ -33,9 +33,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             predicates.add(criteriaBuilder.and(root.get("subCategory").get("name").in(dto.getSubCategory())));
         }
 
-        if (dto.getCategory() != null && !dto.getCategory().isEmpty()) {
-            predicates.add(criteriaBuilder.and(root.get("subCategory").get("category").get("name").in(dto.getCategory())));
-        }
+//        if (dto.getCategory() != null && !dto.getCategory().isEmpty()) {
+//            predicates.add(criteriaBuilder.and(root.get("subCategory").get("category").get("name").in(dto.getCategory())));
+//        }
 
         if (dto.getLowerPrice() != null && dto.getLowerPrice() > 0) {
             predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("price"), dto.getLowerPrice())));

@@ -21,6 +21,7 @@ import uvt.cotut.licenta_be.service.composite.ProductCompositeService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -69,5 +70,13 @@ public class ProductController {
     @GetMapping(value = "/", produces = "application/json", params = "id")
     public Product getProductById(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id)  {
         return productCompositeService.getProductById(id);
+    }
+
+    @Operation(summary = "Get categories with subcategories")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @GetMapping(value = "/allCategories", produces = "application/json")
+    public Map<String, List<String>> getAllCategories()  {
+        return productCompositeService.getAllCategories();
     }
 }
