@@ -22,6 +22,9 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderAmount> orderAmountList;
 
+    @Column(nullable = false)
+    private String address;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime orderDate;
 

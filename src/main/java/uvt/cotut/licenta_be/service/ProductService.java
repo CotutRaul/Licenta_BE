@@ -69,4 +69,8 @@ public class ProductService {
 
         return categoriesMap;
     }
+
+    public List<ProductDisplayDTO> getProductsById(List<Long> listOfIds) {
+        return productRepository.findAllById(listOfIds).stream().map(productMapper::toDisplayDTO).toList();
+    }
 }

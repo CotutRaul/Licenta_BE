@@ -72,6 +72,14 @@ public class ProductController {
         return productCompositeService.getProductById(id);
     }
 
+    @Operation(summary = "Get products by id")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PostMapping(value = "/cart", produces = "application/json", consumes = "application/json")
+    public List<ProductDisplayDTO> getProductsById(@RequestBody List<Long> listOfIds)  {
+        return productCompositeService.getProductsById(listOfIds);
+    }
+
     @Operation(summary = "Get categories with subcategories")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})

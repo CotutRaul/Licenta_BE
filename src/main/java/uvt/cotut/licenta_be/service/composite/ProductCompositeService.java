@@ -40,4 +40,8 @@ public class ProductCompositeService {
     public Map<String, List<String>> getAllCategories() {
         return productService.getAllCategories();
     }
+
+    public List<ProductDisplayDTO> getProductsById(List<Long> listOfIds) {
+        return productService.getProductsById(listOfIds);
+    }
 }
