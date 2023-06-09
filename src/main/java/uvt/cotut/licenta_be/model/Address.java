@@ -1,34 +1,29 @@
 package uvt.cotut.licenta_be.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderAmount {
-
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    private Order order;
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    private Product product;
+    @Column(nullable = false)
+    private String country;
 
     @Column(nullable = false)
-    private Integer amount;
+    private String city;
 
     @Column(nullable = false)
-    private Float price;
+    private String streetLine;
 
     @Column
-    private Float originalPrice;
-
+    private String phoneNumber;
 }

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import uvt.cotut.licenta_be.model.SubCategory;
 
 @Data
 public class ProductCreateDTO {
@@ -17,12 +16,15 @@ public class ProductCreateDTO {
     @NotNull(message = "NOT_NULL, PRICE")
     private Float price;
 
-    @Min(value = 0, message = "INVALID_VALUE, AMOUNT")
-    @NotNull(message = "NOT_NULL, AMOUNT")
-    private Long amount;
+    private Float originalPrice;
 
-    @NotNull(message = "NOT_NULL, CATEGORY")
-    private SubCategory subCategory;
+    @NotBlank(message = "NOT_BLANK, CATEGORY")
+    private String category;
+
+    @NotBlank(message = "NOT_BLANK, SUBCATEGORY")
+    private String subCategory;
+
+    private Boolean available;
 
     @NotNull(message = "NOT_NULL, IMAGE CARD PATH")
     private String imageCardPath;

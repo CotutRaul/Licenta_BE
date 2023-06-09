@@ -8,6 +8,6 @@ public class ProductDisplayDTO {
     private String name;
     private Float price;
     private Float originalPrice;
-    private Long amount;
+//    private Long amount;
     private String imageCardPath;
 }

@@ -40,9 +40,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<Order> orderList;
+//    @JsonIgnore
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @OneToMany(mappedBy = "user")
+//    private List<Order> orderList;
 
     @Override
     @JsonIgnore

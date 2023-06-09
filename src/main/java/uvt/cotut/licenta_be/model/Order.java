@@ -19,16 +19,17 @@ public class Order {
     @ManyToOne(optional = false)
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderAmount> orderAmountList;
 
-    @Column(nullable = false)
-    private String address;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "AddressId")
+    private Address address;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime orderDate;
 
-    @Column(nullable = false, updatable = false)
+    @Column
     private LocalDateTime deliveredDate;
 
     @Column(nullable = false)

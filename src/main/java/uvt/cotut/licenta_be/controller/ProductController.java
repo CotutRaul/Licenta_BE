@@ -45,7 +45,7 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping(value = "upload", consumes = "multipart/form-data")
+    @PostMapping(value = "uploadImage", consumes = "multipart/form-data")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             String imageUrl = productCompositeService.uploadImage(file);

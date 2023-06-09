@@ -27,8 +27,8 @@ public class Product {
     @Column
     private Float originalPrice;
 
-    @Column(nullable = false)
-    private Long amount;
+//    @Column(nullable = false)
+//    private Long amount;
 
     @Column(nullable = false)
     @ColumnDefault("true")

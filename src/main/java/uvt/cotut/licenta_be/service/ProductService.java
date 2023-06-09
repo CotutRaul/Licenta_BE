@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uvt.cotut.licenta_be.exception.ApplicationBusinessException;
 import uvt.cotut.licenta_be.exception.ErrorCode;
+import uvt.cotut.licenta_be.model.Category;
 import uvt.cotut.licenta_be.model.Product;
 import uvt.cotut.licenta_be.model.SubCategory;
+import uvt.cotut.licenta_be.repository.CategoryRepository;
 import uvt.cotut.licenta_be.repository.ProductRepository;
 import uvt.cotut.licenta_be.repository.SubCategoryRepository;
 import uvt.cotut.licenta_be.service.api.ProductMapper;
@@ -30,15 +32,41 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final CategoryRepository categoryRepository;
     private final Cloudinary cloudinaryService;
 
     @Transactional
     public Product addProduct(ProductCreateDTO productCreateDTO) {
         Product product = productMapper.toEntity(productCreateDTO);
-        product.setAvailable(true);
         product.setCreatedDate(LocalDateTime.now());
 
+        handleCategorySubCategory(product, productCreateDTO.getSubCategory(), productCreateDTO.getCategory());
+
         return productRepository.save(product);
+    }
+
+    public void handleCategorySubCategory(Product product, String subCategoryName, String categoryName) {
+        SubCategory subCategory = subCategoryRepository.findByName(subCategoryName);
+        if (subCategory != null) {
+            product.setSubCategory(subCategory);
+        }
+        else {
+            Category category = categoryRepository.findByName(categoryName);
+            if (category != null) {
+                SubCategory newSubCategory = new SubCategory();
+                newSubCategory.setCategory(category);
+                newSubCategory.setName(subCategoryName);
+                product.setSubCategory(subCategoryRepository.save(newSubCategory));
+            }
+            else {
+                Category newCategory = new Category();
+                newCategory.setName(categoryName);
+                SubCategory newSubCategory = new SubCategory();
+                newSubCategory.setCategory(categoryRepository.save(newCategory));
+                newSubCategory.setName(subCategoryName);
+                product.setSubCategory(newSubCategory);
+            }
+        }
     }
 
 
@@ -61,7 +89,7 @@ public class ProductService {
         Map<String, List<String>> categoriesMap = new HashMap<>();
 
         for (SubCategory subCategory : subCategories) {
-            if(!categoriesMap.containsKey(subCategory.getCategory().getName())) {
+            if (!categoriesMap.containsKey(subCategory.getCategory().getName())) {
                 categoriesMap.put(subCategory.getCategory().getName(), new ArrayList<>());
             }
             categoriesMap.get(subCategory.getCategory().getName()).add(subCategory.getName());
