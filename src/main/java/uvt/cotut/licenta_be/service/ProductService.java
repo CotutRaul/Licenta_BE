@@ -45,6 +45,21 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Transactional
+    public Product editProduct(Long id, ProductCreateDTO productCreateDTO) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new ApplicationBusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+        productMapper.editProductFromCreateDto(product,productCreateDTO);
+
+        handleCategorySubCategory(product, productCreateDTO.getSubCategory(), productCreateDTO.getCategory());
+
+        return productRepository.save(product);
+    }
+
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
     public void handleCategorySubCategory(Product product, String subCategoryName, String categoryName) {
         SubCategory subCategory = subCategoryRepository.findByName(subCategoryName);
         if (subCategory != null) {
@@ -78,6 +93,7 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(() -> new ApplicationBusinessException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 
+    @Transactional
     public String uploadImage(MultipartFile file) throws IOException {
         Map<?, ?> uploadResult = cloudinaryService.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
 

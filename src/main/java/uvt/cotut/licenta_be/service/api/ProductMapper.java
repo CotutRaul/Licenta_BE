@@ -1,7 +1,6 @@
 package uvt.cotut.licenta_be.service.api;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import uvt.cotut.licenta_be.model.Product;
 import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
@@ -13,4 +12,8 @@ public interface ProductMapper {
     Product toEntity(ProductCreateDTO productCreateDTO);
 
     ProductDisplayDTO toDisplayDTO(Product product);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "subCategory", ignore = true)
+    void editProductFromCreateDto(@MappingTarget Product product, ProductCreateDTO productCreateDTO);
 }

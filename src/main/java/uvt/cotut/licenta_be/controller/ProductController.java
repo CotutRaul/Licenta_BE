@@ -42,6 +42,24 @@ public class ProductController {
         return productCompositeService.addProduct(productCreateDTO);
     }
 
+    @Operation(summary = "Edit a product")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/edit", produces = "application/json", consumes = "application/json", params = "id")
+    public Product editProduct(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id,
+                               @RequestBody @Valid ProductCreateDTO productCreateDTO)  {
+        return productCompositeService.editProduct(id, productCreateDTO);
+    }
+
+    @Operation(summary = "Get all products")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @GetMapping(value = "/all", produces = "application/json")
+    public List<Product> getAllProducts()  {
+        return productCompositeService.getAllProducts();
+    }
+
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PreAuthorize("hasAuthority('ADMIN')")

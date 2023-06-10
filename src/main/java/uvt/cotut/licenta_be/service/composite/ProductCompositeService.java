@@ -25,6 +25,14 @@ public class ProductCompositeService {
         return productService.addProduct(productCreateDTO);
     }
 
+    public Product editProduct(Long id, ProductCreateDTO productCreateDTO) {
+        return productService.editProduct(id, productCreateDTO);
+    }
+
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
     public List<ProductDisplayDTO> getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
         return productService.getFilteredProducts(criteriaDTO, limit);
     }
