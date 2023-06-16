@@ -12,7 +12,8 @@ public enum ErrorCode{
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND,"Product not Found"),
     ORDER_BAD_REQUEST(HttpStatus.BAD_REQUEST, "Order couldn't be completed"),
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "Order not Found"),
-    ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access Denied for this action");
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access Denied for this action"),
+    SHOP_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "Shop not Found");
 
     private final HttpStatus httpStatus;
     private final String errorInfo;
