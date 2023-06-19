@@ -30,7 +30,7 @@ public class AuthenticationController {
         return authenticationCompositeService.authenticateLogin(credentialsDTO);
     }
 
-    @Operation(summary = "Login user with credentials")
+    @Operation(summary = "Register user with credentials")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")

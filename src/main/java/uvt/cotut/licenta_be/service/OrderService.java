@@ -78,4 +78,19 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public Order getOrderById(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ApplicationBusinessException(ErrorCode.ORDER_NOT_FOUND));
+        User userDetails = SecurityHelper.getUserDetails();
+
+        if ( !(userDetails.getId() == order.getUser().getId() || userDetails.getRole() == Role.ADMIN)) {
+            throw new ApplicationBusinessException(ErrorCode.ACCESS_DENIED);
+        }
+
+        return order;
+    }
 }

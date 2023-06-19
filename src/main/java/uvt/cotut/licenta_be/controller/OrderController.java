@@ -15,6 +15,7 @@ import uvt.cotut.licenta_be.model.OrderStatus;
 import uvt.cotut.licenta_be.service.api.dto.OrderCreateDTO;
 import uvt.cotut.licenta_be.service.composite.OrderCompositeService;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
@@ -26,7 +27,7 @@ public class OrderController {
 
     private final OrderCompositeService orderCompositeService;
 
-    @Operation(summary = "Insert a new oder")
+    @Operation(summary = "Insert a new order")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PreAuthorize("hasAuthority('CLIENT')")
@@ -35,12 +36,30 @@ public class OrderController {
         return orderCompositeService.addOrder(orderCreateDTO);
     }
 
-    @Operation(summary = "Insert a new oder")
+    @Operation(summary = "Update an order")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/update", produces = "application/json", params = {"id", "action"})
-    public Order addOrder(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id, @RequestParam("action") OrderStatus action)  {
+    public Order updateOrder(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id, @RequestParam("action") OrderStatus action)  {
         return orderCompositeService.updateOrder(id, action);
+    }
+
+    @Operation(summary = "Get order by id")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/", produces = "application/json", params = "id")
+    public Order getOrderById(@RequestParam("id") @Min(value = 1, message = "Invalid data") Long id)  {
+        return orderCompositeService.getOrderById(id);
+    }
+
+    @Operation(summary = "Get all orders")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping(value = "/all", produces = "application/json")
+    public List<Order> getAllOrders()  {
+        return orderCompositeService.getAllOrders();
     }
 }

@@ -9,6 +9,8 @@ import uvt.cotut.licenta_be.model.OrderStatus;
 import uvt.cotut.licenta_be.service.OrderService;
 import uvt.cotut.licenta_be.service.api.dto.OrderCreateDTO;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -22,5 +24,13 @@ public class OrderCompositeService {
 
     public Order updateOrder(Long id, OrderStatus action) {
         return orderService.updateOrder(id, action);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+
+    public Order getOrderById(Long id) {
+        return orderService.getOrderById(id);
     }
 }
