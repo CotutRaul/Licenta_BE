@@ -18,6 +18,7 @@ import uvt.cotut.licenta_be.repository.SubCategoryRepository;
 import uvt.cotut.licenta_be.service.api.ProductMapper;
 import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
+import uvt.cotut.licenta_be.service.api.dto.ProductDisplayAndPagesDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class ProductService {
     @Transactional
     public Product editProduct(Long id, ProductCreateDTO productCreateDTO) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ApplicationBusinessException(ErrorCode.PRODUCT_NOT_FOUND));
-        productMapper.editProductFromCreateDto(product,productCreateDTO);
+        productMapper.editProductFromCreateDto(product, productCreateDTO);
 
         handleCategorySubCategory(product, productCreateDTO.getSubCategory(), productCreateDTO.getCategory());
 
@@ -64,16 +65,14 @@ public class ProductService {
         SubCategory subCategory = subCategoryRepository.findByName(subCategoryName);
         if (subCategory != null) {
             product.setSubCategory(subCategory);
-        }
-        else {
+        } else {
             Category category = categoryRepository.findByName(categoryName);
             if (category != null) {
                 SubCategory newSubCategory = new SubCategory();
                 newSubCategory.setCategory(category);
                 newSubCategory.setName(subCategoryName);
                 product.setSubCategory(subCategoryRepository.save(newSubCategory));
-            }
-            else {
+            } else {
                 Category newCategory = new Category();
                 newCategory.setName(categoryName);
                 SubCategory newSubCategory = new SubCategory();
@@ -85,8 +84,18 @@ public class ProductService {
     }
 
 
-    public List<ProductDisplayDTO> getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
-        return productRepository.findProductsFiltered(criteriaDTO, limit).stream().map(productMapper::toDisplayDTO).toList();
+    public ProductDisplayAndPagesDTO getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
+        List<Product> productsFiltered = productRepository.findProductsFiltered(criteriaDTO, limit);
+
+        ProductDisplayAndPagesDTO productDisplayAndPagesDTO = new ProductDisplayAndPagesDTO();
+
+        productDisplayAndPagesDTO.setPages((int) Math.ceil((double) productsFiltered.size() / limit));
+
+        int offset = (criteriaDTO.getPage() - 1) * limit;
+        List<Product> subList = productsFiltered.subList(offset, Math.min(productsFiltered.size(), offset + limit));
+        productDisplayAndPagesDTO.setProductDisplayList(subList.stream().map(productMapper::toDisplayDTO).toList());
+
+        return productDisplayAndPagesDTO;
     }
 
     public Product getProductById(Long id) {

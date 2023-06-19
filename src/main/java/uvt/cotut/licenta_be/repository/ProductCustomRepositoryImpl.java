@@ -45,9 +45,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             predicates.add(criteriaBuilder.and(criteriaBuilder.lessThan(root.get("price"), dto.getUpperPrice())));
         }
 
-        if (Boolean.TRUE.equals(dto.getInStock())) {
-            predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("amount"), 0)));
-        }
+//        if (Boolean.TRUE.equals(dto.getInStock())) {
+//            predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("amount"), 0)));
+//        }
 
         Order order = criteriaBuilder.asc(root.get("name"));
         if (StringUtils.isNotBlank(dto.getSort())) {
@@ -56,7 +56,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         }
 
         criteriaQuery.select(root).where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).orderBy(order);
-        int offset = (dto.getPage() - 1) * limit;
-        return entityManager.createQuery(criteriaQuery).setFirstResult(offset).setMaxResults(limit).getResultList();
+//        int offset = (dto.getPage() - 1) * limit;
+//        return entityManager.createQuery(criteriaQuery).setFirstResult(offset).setMaxResults(limit).getResultList();
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

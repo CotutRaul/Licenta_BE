@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import uvt.cotut.licenta_be.model.Product;
 import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
+import uvt.cotut.licenta_be.service.api.dto.ProductDisplayAndPagesDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 import uvt.cotut.licenta_be.service.composite.ProductCompositeService;
 
@@ -77,8 +78,8 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PostMapping(value = "/", produces = "application/json", consumes = "application/json", params = "limit")
-    public List<ProductDisplayDTO> getFilteredProducts(@RequestBody FilterCriteriaDTO criteriaDTO,
-                                                       @RequestParam("limit") @Min(value = 1, message = "Invalid data") Integer limit)  {
+    public ProductDisplayAndPagesDTO getFilteredProducts(@RequestBody FilterCriteriaDTO criteriaDTO,
+                                                         @RequestParam("limit") @Min(value = 1, message = "Invalid data") Integer limit)  {
         return productCompositeService.getFilteredProducts(criteriaDTO, limit);
     }
 

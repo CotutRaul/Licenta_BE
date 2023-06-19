@@ -62,4 +62,13 @@ public class OrderController {
     public List<Order> getAllOrders()  {
         return orderCompositeService.getAllOrders();
     }
+
+    @Operation(summary = "Get all orders made by a client")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PreAuthorize("hasAuthority('CLIENT')")
+    @GetMapping(value = "/allByClient", produces = "application/json")
+    public List<Order> getAllOrdersByClient()  {
+        return orderCompositeService.getAllOrdersByClient();
+    }
 }

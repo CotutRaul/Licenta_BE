@@ -33,4 +33,8 @@ public class OrderCompositeService {
     public Order getOrderById(Long id) {
         return orderService.getOrderById(id);
     }
+
+    public List<Order> getAllOrdersByClient() {
+        return orderService.getAllOrdersByClient();
+    }
 }

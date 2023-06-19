@@ -8,6 +8,7 @@ import uvt.cotut.licenta_be.model.Product;
 import uvt.cotut.licenta_be.service.ProductService;
 import uvt.cotut.licenta_be.service.api.dto.FilterCriteriaDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductCreateDTO;
+import uvt.cotut.licenta_be.service.api.dto.ProductDisplayAndPagesDTO;
 import uvt.cotut.licenta_be.service.api.dto.ProductDisplayDTO;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class ProductCompositeService {
         return productService.getAllProducts();
     }
 
-    public List<ProductDisplayDTO> getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
+    public ProductDisplayAndPagesDTO getFilteredProducts(FilterCriteriaDTO criteriaDTO, Integer limit) {
         return productService.getFilteredProducts(criteriaDTO, limit);
     }
 

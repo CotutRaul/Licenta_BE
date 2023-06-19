@@ -93,4 +93,10 @@ public class OrderService {
 
         return order;
     }
+
+    public List<Order> getAllOrdersByClient() {
+        User userDetails = SecurityHelper.getUserDetails();
+
+        return orderRepository.findAllByUser(userDetails);
+    }
 }
