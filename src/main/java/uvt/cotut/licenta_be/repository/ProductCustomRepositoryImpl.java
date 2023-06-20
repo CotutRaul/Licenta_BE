@@ -45,9 +45,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
             predicates.add(criteriaBuilder.and(criteriaBuilder.lessThan(root.get("price"), dto.getUpperPrice())));
         }
 
-//        if (Boolean.TRUE.equals(dto.getInStock())) {
-//            predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("amount"), 0)));
-//        }
+        if (Boolean.TRUE.equals(dto.getDiscounted())) {
+            predicates.add(criteriaBuilder.and(criteriaBuilder.greaterThan(root.get("originalPrice"), 0)));
+        }
 
         Order order = criteriaBuilder.asc(root.get("name"));
         if (StringUtils.isNotBlank(dto.getSort())) {

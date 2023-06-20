@@ -11,7 +11,7 @@ public class FilterCriteriaDTO {
     private Float upperPrice;
     private List<String> category;
     private List<String> subCategory;
-    private Boolean inStock;
+    private Boolean discounted;
     private String sort;
     private Integer page;
 }
