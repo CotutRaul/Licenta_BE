@@ -61,6 +61,7 @@ public class ProductController {
         return productCompositeService.getAllProducts();
     }
 
+    @Operation(summary = "Upload an image and get the host url")
     @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
             @ApiResponse(responseCode = "500", description = "Server Error"),})
     @PreAuthorize("hasAuthority('ADMIN')")

@@ -1,4 +1,4 @@
-package uvt.cotut.licenta_be.controller;
+package uvt.cotut.licenta_be.config.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
