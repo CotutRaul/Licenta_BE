@@ -58,7 +58,7 @@ public class OrderService {
 
         Order save = orderRepository.save(newOrder);
 
-        emailSenderService.sendConfirmationEmail(userDetails.getEmail(), save);
+        emailSenderService.sendConfirmationEmail(save);
         return save;
     }
 
@@ -76,7 +76,14 @@ public class OrderService {
         }
         order.setStatus(action);
 
-        return orderRepository.save(order);
+        Order save = orderRepository.save(order);
+        switch (save.getStatus()){
+            case IN_DELIVERY -> emailSenderService.sendInDelivery(save);
+            case DELIVERED -> emailSenderService.sendDelivered(save);
+            case CANCELED -> emailSenderService.sendCanceled(save);
+        }
+
+        return save;
     }
 
     public List<Order> getAllOrders() {
