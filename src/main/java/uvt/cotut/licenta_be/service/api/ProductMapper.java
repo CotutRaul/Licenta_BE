@@ -13,7 +13,6 @@ public interface ProductMapper {
 
     ProductDisplayDTO toDisplayDTO(Product product);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "subCategory", ignore = true)
     void editProductFromCreateDto(@MappingTarget Product product, ProductCreateDTO productCreateDTO);
 }

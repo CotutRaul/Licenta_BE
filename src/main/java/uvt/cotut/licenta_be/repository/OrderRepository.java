@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 import uvt.cotut.licenta_be.model.Order;
 import uvt.cotut.licenta_be.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>{
     List<Order> findAllByUser(User user);
+    List<Order> findByOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

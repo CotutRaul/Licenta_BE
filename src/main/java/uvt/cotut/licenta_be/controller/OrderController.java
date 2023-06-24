@@ -8,10 +8,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uvt.cotut.licenta_be.model.Order;
 import uvt.cotut.licenta_be.model.OrderStatus;
+import uvt.cotut.licenta_be.service.api.dto.DateRangeDTO;
 import uvt.cotut.licenta_be.service.api.dto.OrderCreateDTO;
 import uvt.cotut.licenta_be.service.composite.OrderCompositeService;
 
@@ -71,4 +73,14 @@ public class OrderController {
     public List<Order> getAllOrdersByClient()  {
         return orderCompositeService.getAllOrdersByClient();
     }
+
+    @Operation(summary = "Generate Report for specific time period")
+    @ApiResponses(value = {@ApiResponse(responseCode = "401", description = "Unauthorized Feature"),
+            @ApiResponse(responseCode = "500", description = "Server Error"),})
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/generate-excel", produces = "application/octet-stream", consumes = "application/json")
+    public ResponseEntity<byte[]> downloadExcelFile(@RequestBody DateRangeDTO dateRangeDTO) {
+        return orderCompositeService.downloadExcelFile(dateRangeDTO);
+    }
+
 }
